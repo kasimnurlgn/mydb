@@ -9,12 +9,22 @@ let mysql2 = require("mysql2");
 // Import the Express framework to create a web server.
 let express = require("express");
 
+// import the body parser
+let bodyparser = require("body-parser");
+const bodyParser = require("body-parser");
+
 // Initialize an Express application
 let app = express();
 //make it listen at port 5000.
 app.listen(5000, () => {
   console.log("The server is up and running.");
 });
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 // Creating the connection object with the provided configuration
 let connection = mysql2.createConnection({
@@ -122,5 +132,24 @@ FOREIGN KEY (user_id) REFERENCES User(User_id)
         });
       });
     });
+  });
+});
+app.post("/add-product", (req, res) => {
+  // res.send("Am working");
+  console.log(req.body);
+  let product_url = req.body.product_url;
+  let product_name = req.body.product_name;
+
+  // syntax
+  /* INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...); */
+
+  let addToProducts = `INSERT INTO Products(
+  Product_url, Product_name) VALUES ( product_url,product_name )`;
+  connection.query(addToProducts, (err, result) => {
+    if (err) console.log(err.message)
+    else {
+    res.send("Values are added")
+    }
   });
 });
