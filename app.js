@@ -11,7 +11,7 @@ let app = express();
 
 // import cors to avoid CORS errors
 let cors = require("cors");
-app.use(cors()); // "Hey app, use the cors middleware to allow all incoming requests from any origin."
+app.use(cors()); 
 
 // change the encoming data to a js object.
 app.use(express.urlencoded({ extended: true }));
