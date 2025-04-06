@@ -37,7 +37,7 @@ connection.connect((err) => {
 ); */
 
 //#2
-// so we are using get just because of the fact that the browser automatically sends a GET request?
+// using get request to handle the /install route.
 app.get("/install", (req, res) => {
   // Products table query
   let createProducts = `CREATE TABLE IF NOT EXISTS Products(
