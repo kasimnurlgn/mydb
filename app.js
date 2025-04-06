@@ -6,21 +6,20 @@ let mysql2 = require("mysql2");
 // Import the Express framework to create a web server.
 let express = require("express");
 
-// import the body parser
-const bodyParser = require("body-parser");
-
 // Initialize an Express application
 let app = express();
+
+// import cors to avoid CORS errors
+let cors = require("cors");
+app.use(cors()); // "Hey app, use the cors middleware to allow all incoming requests from any origin."
+
+// change the encoming data to a js object.
+app.use(express.urlencoded({ extended: true }));
+
 //make it listen at port 5000.
 app.listen(5000, () => {
   console.log("The server is up and running.");
 });
-
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
 
 // Creating the connection object with the provided configuration
 let connection = mysql2.createConnection({
@@ -139,13 +138,16 @@ app.post("/add-product", (req, res) => {
     VALUES (?, ?)
   `;
 
-  connection.query(addToProducts, [product_url, product_name], (err, result) => {
-    if (err) {
-      console.log(err.message);
-      res.status(500).send("Error adding product");
-    } else {
-      res.send("Values are added");
+  connection.query(
+    addToProducts,
+    [product_url, product_name],
+    (err, result) => {
+      if (err) {
+        console.log(err.message);
+        res.status(500).send("Error adding product");
+      } else {
+        res.status(200).send("Product added successfully");
+      }
     }
-  });
+  );
 });
-
