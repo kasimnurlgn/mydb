@@ -1,4 +1,8 @@
 // # 1
+/* git add .
+git commit -m "bootstrap added"
+git push
+*/
 //Import the MySQL2 library to interact with the MySQL dattabase
 let mysql2 = require("mysql2");
 
