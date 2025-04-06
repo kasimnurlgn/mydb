@@ -1,8 +1,5 @@
 // # 1
-/* git add .
-git commit -m "fonts style updated"
-git push
-*/
+
 //Import the MySQL2 library to interact with the MySQL dattabase
 let mysql2 = require("mysql2");
 
@@ -10,7 +7,6 @@ let mysql2 = require("mysql2");
 let express = require("express");
 
 // import the body parser
-let bodyparser = require("body-parser");
 const bodyParser = require("body-parser");
 
 // Initialize an Express application
@@ -135,21 +131,21 @@ FOREIGN KEY (user_id) REFERENCES User(User_id)
   });
 });
 app.post("/add-product", (req, res) => {
-  // res.send("Am working");
-  console.log(req.body);
-  let product_url = req.body.product_url;
-  let product_name = req.body.product_name;
+  const product_url = req.body.product_url;
+  const product_name = req.body.product_name;
 
-  // syntax
-  /* INSERT INTO table_name (column1, column2, column3, ...)
-VALUES (value1, value2, value3, ...); */
+  let addToProducts = `
+    INSERT INTO Products (Product_url, Product_name)
+    VALUES (?, ?)
+  `;
 
-  let addToProducts = `INSERT INTO Products(
-  Product_url, Product_name) VALUES ( product_url,product_name )`;
-  connection.query(addToProducts, (err, result) => {
-    if (err) console.log(err.message)
-    else {
-    res.send("Values are added")
+  connection.query(addToProducts, [product_url, product_name], (err, result) => {
+    if (err) {
+      console.log(err.message);
+      res.status(500).send("Error adding product");
+    } else {
+      res.send("Values are added");
     }
   });
 });
+
