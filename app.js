@@ -1,6 +1,6 @@
 // # 1
 /* git add .
-git commit -m "bootstrap added"
+git commit -m "fonts style updated"
 git push
 */
 //Import the MySQL2 library to interact with the MySQL dattabase
